@@ -54,7 +54,7 @@ def main(logs_root, outdir):
                     ffmpeg,
                     str(src_path),
                     str(out_path),
-                    900,
+                    600,
                     log_dir,
                     idx
                 ))
