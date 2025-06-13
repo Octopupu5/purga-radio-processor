@@ -42,7 +42,7 @@ cd C:\Users\имя\Desktop\purga-radio-processor
 
 ### Запуск программы
 
-В командной строке запустите:
+В командной строке запустите команду:
 ```
 python -m src.news_cutter.main "\\RECORDER\Logger" "\\RECORDER\Logger_cutted"
 ```
@@ -53,7 +53,7 @@ python -m src.news_cutter.main "\\RECORDER\Logger" "\\RECORDER\Logger_cutted"
 - Результаты появятся в папке `\\RECORDER\Logger_cutted`
 - В папке `logs` в папке проекта будут файлы с информацией о работе программы
 
-### Ошибка "ffmpeg не найден":
+## После запуска команды зайдите в папку `logs` и откройте файл `app`. Если в файле написано "ffmpeg не найден", необходимо установить "ffmpeg":
 1. Откройте ссылку: https://www.gyan.dev/ffmpeg/builds/
 2. Найдите раздел **"release builds"**
 3. Нажмите на ссылку **"ffmpeg-release-essentials.zip"**
