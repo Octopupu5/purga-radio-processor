@@ -61,12 +61,11 @@ python -m src.news_cutter.main "\\RECORDER\Logger" "\\RECORDER\Logger_cutted"
 5. Щелкните правой кнопкой мыши на архиве и выберите **"Извлечь все..."**
 7. Нажмите **"Извлечь"**
 8. Откройте распакованную папку, зайдите в папку **"bin"**, там будет файл `ffmpeg.exe`
-9. Выделите его, нажмите `Ctrl + C`, откройте папку скачанного проекта и нажмите `Ctrl + V`.
-10. Положите файл ffmpeg.exe в корневую папку проекта (там же, где и LICENSE, delta.md и README.md)
+9. Выделите его, нажмите `Ctrl + C`, откройте папку скачанного проекта и нажмите `Ctrl + V`, таким образом положив файл ffmpeg.exe в корневую папку проекта (там же, где и LICENSE, delta.md и README.md)
 ```
 purga-radio-processor
   dummy_data
-  src  
+  src
   LICENSE
   ffmpeg.exe <- тут должен быть файл
   ...
