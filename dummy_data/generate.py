@@ -17,12 +17,12 @@ def make_dummy_mp3(path, duration_sec=30 * 2 * 16):
     subprocess.run(cmd, check=True)
 
 dates = ['19990101', '20250101']
-times = ['13_00_00.mp3', '18_00_00.mp3']
+times = ['13_00_00.wav', '18_00_00.wav']
 
-os.makedirs('PGM_logger', exist_ok=True)
+os.makedirs('RECORDER/Logger/PGM_256', exist_ok=True)
 
 for date in dates:
-    ddir = Path('PGM_logger') / date
+    ddir = Path('RECORDER/Logger/PGM_256') / date
     ddir.mkdir(exist_ok=True)
     for tfile in times:
         make_dummy_mp3(ddir / tfile)

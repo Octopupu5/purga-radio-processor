@@ -5,8 +5,8 @@ from concurrent.futures import ProcessPoolExecutor
 import multiprocessing
 import shutil
 
-from news_cutter.logger import get_logger
-from news_cutter.ffmpeg_utils import find_ffmpeg, cut_audio
+from .logger import get_logger
+from .ffmpeg_utils import find_ffmpeg, cut_audio
 
 def clean_log_dir(log_dir):
     log_path = Path(log_dir)
@@ -38,15 +38,18 @@ def main(logs_root, outdir):
 
     to_process = []
     idx = 0
+    
+    logs_root_path = Path(logs_root)
 
     for root, dirs, files in os.walk(logs_root):
         for fname in target_times:
             src_path = Path(root) / fname
             if src_path.exists():
-                date = Path(root).name
-                hour = fname.split('_')[0]
-                out_subdir = Path(outdir) / date
+                relative_path = Path(root).relative_to(logs_root_path)
+                out_subdir = Path(outdir) / relative_path
                 out_subdir.mkdir(parents=True, exist_ok=True)
+                
+                hour = fname.split('_')[0]
                 out_name = f'{hour}_00_00.wav'
                 out_path = out_subdir / out_name
 
@@ -59,6 +62,8 @@ def main(logs_root, outdir):
                     idx
                 ))
                 idx += 1
+                
+                logger.info(f"Добавлен в очередь: {src_path} -> {out_path}")
 
     max_workers = min(4, multiprocessing.cpu_count())
 
