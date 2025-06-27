@@ -1,7 +1,17 @@
+"""Logging configuration for news cutter"""
 import logging
 from pathlib import Path
 
 def get_logger(name='news_cutter', log_dir='logs', log_file='app.log'):
+    """
+    Create and configure logger instance
+    Args:
+        name: Logger name prefix
+        log_dir: Directory for log files
+        log_file: Log filename 
+    Returns:
+        logging.Logger: Configured logger instance
+    """
     Path(log_dir).mkdir(exist_ok=True)
     logger = logging.getLogger(f"{name}.{log_file}")
     logger.setLevel(logging.INFO)

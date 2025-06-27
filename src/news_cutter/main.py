@@ -1,3 +1,4 @@
+"""Entry point for news cutter application"""
 import sys
 import os
 from pathlib import Path
@@ -9,6 +10,11 @@ from .logger import get_logger
 from .ffmpeg_utils import find_ffmpeg, cut_audio
 
 def clean_log_dir(log_dir):
+    """
+    Remove all files and subdirectories from log directory
+    Args:
+        log_dir: Path to log directory
+    """
     log_path = Path(log_dir)
     if log_path.exists():
         for path in log_path.iterdir():
@@ -18,9 +24,16 @@ def clean_log_dir(log_dir):
                 shutil.rmtree(path)
 
 def process_file(args):
+    """
+    Process a single audio file (worker process)
+    Args:
+        args: Tuple of (ffmpeg_path, src_path, out_path, duration_sec, log_dir, process_idx) 
+    Returns:
+        bool: Always True on completion
+    """
     ffmpeg_path, src_path, out_path, duration_sec, log_dir, process_idx = args
     logger = get_logger(log_file=f'app_{process_idx}.log', log_dir=log_dir)
-    logger.info(f"=== Запущен процесс #{process_idx} (PID: {os.getpid()}) ===")
+    logger.info(f"=== Запущен процесс #{process_idx} ===")
     input_short = '/'.join(Path(src_path).parts[-2:])
     output_short = '/'.join(Path(out_path).parts[-3:])
     logger.info(f"Обработка {input_short}")
@@ -28,10 +41,18 @@ def process_file(args):
     return True
 
 def main(logs_root, outdir):
+    """
+    Main processing function
+    Searches for specific audio files (13_00_00.wav, 18_00_00.wav) in the input directory,
+    cuts first 10 minutes from each file using parallel processing.
+    Args:
+        logs_root: Root directory containing source audio files
+        outdir: Output directory for processed files
+    """
     log_dir = 'logs'
     clean_log_dir(log_dir)
     logger = get_logger(log_dir=log_dir)
-    logger.info(f"=== Главный (мастер) процесс (PID: {os.getpid()}) ===")
+    logger.info(f"=== Запущен главный процесс ===")
     ffmpeg = find_ffmpeg(logger)
     os.makedirs(outdir, exist_ok=True)
     target_times = ['13_00_00.wav', '18_00_00.wav']

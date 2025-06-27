@@ -1,9 +1,17 @@
+"""Generate dummy audio files for testing purposes"""
 import os
 from pathlib import Path
 import subprocess
 import sys
 
 def find_ffmpeg():
+    """
+    Find ffmpeg executable in system PATH or local directory
+    Returns:
+        str: Path to ffmpeg executable
+    Raises:
+        SystemExit: If ffmpeg is not found
+    """
     try:
         subprocess.run(['ffmpeg', '-version'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return 'ffmpeg'
@@ -19,6 +27,12 @@ def find_ffmpeg():
     sys.exit(1)
 
 def make_dummy_mp3(path, duration_sec=30 * 2 * 16):
+    """
+    Create a dummy audio file with sine wave
+    Args:
+        path: Output file path
+        duration_sec: Duration in seconds (default: 960)
+    """
     ffmpeg = find_ffmpeg()
     cmd = [
         ffmpeg,

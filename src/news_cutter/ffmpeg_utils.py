@@ -1,3 +1,4 @@
+"""FFmpeg utilities for audio processing"""
 import subprocess
 import sys
 from pathlib import Path
@@ -7,6 +8,15 @@ import sys
 from pathlib import Path
 
 def find_ffmpeg(logger):
+    """
+    Locate ffmpeg executable
+    Args:
+        logger: Logger instance for output
+    Returns:
+        str: Path to ffmpeg executable
+    Raises:
+        SystemExit: If ffmpeg is not found
+    """
     try:
         subprocess.run(['ffmpeg', '-version'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         logger.info("ffmpeg найден в системе.")
@@ -23,6 +33,19 @@ def find_ffmpeg(logger):
     sys.exit(1)
 
 def cut_audio(ffmpeg, src_path, out_path, duration_sec, logger, input_short, output_short):
+    """
+    Cut audio file to specified duration
+    Args:
+        ffmpeg: Path to ffmpeg executable
+        src_path: Source audio file path
+        out_path: Output file path
+        duration_sec: Duration to cut in seconds
+        logger: Logger instance
+        input_short: Short input path for logging
+        output_short: Short output path for logging
+    Returns:
+        bool: True if successful, False otherwise
+    """
     command = [
         ffmpeg,
         '-y',
